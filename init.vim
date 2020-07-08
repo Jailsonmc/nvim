@@ -182,3 +182,9 @@ let g:airline_theme='minimalist'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
+augroup vim-colors-xcode
+    autocmd!
+augroup END
+
+autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
+autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
