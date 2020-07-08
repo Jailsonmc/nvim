@@ -85,7 +85,7 @@ Plug 'junegunn/fzf.vim'
 " Git
 " Plug 'mhinz/vim-signify'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'
 
@@ -129,6 +129,11 @@ Plug 'junegunn/fzf.vim'
 
 "PHP
 Plug 'tpope/vim-fugitive'
+Plug 'StanAngeloff/php.vim'
+Plug 'stephpy/vim-php-cs-fixer'
+Plug 'ncm2/ncm2'
+Plug 'phpactor/phpactor'
+Plug 'phpactor/ncm2-phpactor'
 
 "IDE
 Plug 'preservim/nerdtree'
