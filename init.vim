@@ -3,6 +3,18 @@ set hidden
 set relativenumber
 "set mouse=a
 set inccommand=split
+" Complete files like a shell
+set wildmode=list:longest
+" SEARCH
+" Vim will start searching as you type
+set incsearch
+
+" Aumemta a velocidade e desempenho
+set ttyfast
+
+" AUTORELOAD
+" Automatically reload buffers when file changes
+set autoread
 
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
@@ -10,165 +22,140 @@ nnoremap <leader>ev :vsplit ~/AppData/Local/nvim/init.vim<cr>
 nnoremap <leader>sv :source ~/AppData/Local/nvim/init.vim<cr>
 
 nnoremap <c-p> :Files<cr>
-nnoremap <c-f> :Ag<space>
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <c-f> :Ack<space>
+
+" NERDTree
+"nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>ft :NERDTreeToggle<cr>
+set ts=4
+set cul
+syn match ipaddr   /\(\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)\.\)\{3\}\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)/
+ hi link ipaddr Identifier
+ imap ><Tab> ><Esc>mt?<\w<Cr>:let @/=""<Cr>lyiw`ta</><Esc>P`tli
+
+"nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
+nnoremap <c-g> <c-]> 
+nnoremap <c-i> :tabnew %<CR>g<C-]>
+"nnoremap <c-y> <Esc>:tabnew %<CR>g<C-]>
+
+"nmap <silent> <M-Down> :call ScrollOtherWindow("down")<CR>
+"nmap <silent> <M-Up> :call ScrollOtherWindow("up")<CR>
+
+" Set automatic expansion of parenthesis/brackets
+inoremap ( ()<esc>:call BC_AddChar(")")<cr>i
+inoremap { {}<esc>:call BC_AddChar("}")<cr>i
+inoremap [ []<esc>:call BC_AddChar("]")<cr>i
+
+" mapeia CTRL+j para pular fora de parênteses colchetes etc...
+inoremap <C-j> <esc>:call search(BC_GetChar(), "W")<cr>a
+" Function for the above
+function! BC_AddChar(schar)
+   if exists("b:robstack")
+       let b:robstack = b:robstack . a:schar
+   else
+       let b:robstack = a:schar
+   endif
+endfunction
+function! BC_GetChar()
+   let l:char = b:robstack[strlen(b:robstack)-1]
+   let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
+   return l:char
+endfunction
+
 
 call plug#begin()
-" Change dates fast
-Plug 'tpope/vim-speeddating'
 
-" Convert binary, hex, etc..
-Plug 'glts/vim-radical'
-
-" Files
-Plug 'tpope/vim-eunuch'
-
-" Repeat stuff
-Plug 'tpope/vim-repeat'
-
-" Surround
-Plug 'tpope/vim-surround'
-
-" Better Comments
+" Essentials 
+Plug 'preservim/nerdtree'
+Plug 'bfredl/nvim-miniyank'
+Plug 'moll/vim-bbye'
+Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
-" Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-abolish'
+Plug 'ludovicchabant/vim-gutentags'
 
-" Have the file system follow you around
-Plug 'airblade/vim-rooter'
-
-" auto set indent settings
-Plug 'tpope/vim-sleuth'
-
-" Text Navigation
-Plug 'justinmk/vim-sneak'
-Plug 'unblevable/quick-scope'
-" Plug 'easymotion/vim-easymotion'
-
-" Add some color
-Plug 'norcalli/nvim-colorizer.lua'
-Plug 'junegunn/rainbow_parentheses.vim'
-
-" Better Syntax Support
-Plug 'sheerun/vim-polyglot'
-
-" Cool Icons
-Plug 'ryanoasis/vim-devicons'
-
-" Auto pairs for '(' '[' '{' 
-Plug 'jiangmiao/auto-pairs'
-
-" Closetags
-Plug 'alvan/vim-closetag'
-
-" Themes
-Plug 'christianchiarulli/onedark.vim'
-" Plug 'kaicataldo/material.vim'
-" Plug 'NLKNguyen/papercolor-theme'
-" Plug 'tomasiser/vim-code-dark'
-Plug 'arzg/vim-colors-xcode'
-
-" Intellisense
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Status Line
-Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Ranger
-" Plug 'francoiscabrol/ranger.vim'
-" Plug 'rbgrouleff/bclose.vim'
-Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
-
-" FZF
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" Git
-" Plug 'mhinz/vim-signify'
-Plug 'airblade/vim-gitgutter'
-"Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'junegunn/gv.vim'
-
-" Terminal
-Plug 'voldikss/vim-floaterm'
-
-" Start Screen
+" Project Management
+Plug 'amiorin/vim-project'
 Plug 'mhinz/vim-startify'
 
-" Vista
-Plug 'liuchengxu/vista.vim'
-
-" See what keys do like in emacs
-Plug 'liuchengxu/vim-which-key'
-
-" Zen mode
-Plug 'junegunn/goyo.vim'
-
-" Making stuff
-Plug 'neomake/neomake'
-
-" Snippets
-Plug 'honza/vim-snippets'
-Plug 'mattn/emmet-vim'
-
-" Better Comments
-" Plug 'jbgutierrez/vim-better-comments'
-" Echo doc
-" Plug 'Shougo/echodoc.vim'
-" Interactive code
-Plug 'ChristianChiarulli/codi.vim'
-
-Plug 'morhetz/gruvbox'
-Plug 'dikiaap/minimalist'
-Plug 'leafgarland/typescript-vim'
-Plug 'ianks/vim-tsx'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'sheerun/vim-polyglot'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-"PHP
-Plug 'tpope/vim-fugitive'
+" Syntax 
 Plug 'StanAngeloff/php.vim'
 Plug 'stephpy/vim-php-cs-fixer'
+
+" Autocompletion
 Plug 'ncm2/ncm2'
 Plug 'phpactor/phpactor'
 Plug 'phpactor/ncm2-phpactor'
 
-"IDE
-Plug 'preservim/nerdtree'
+" Searching / Replacing
+" FZF
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
+Plug 'wincent/ferret'
 
+" Code Quality
+Plug 'neomake/neomake'
 
-Plug 'honza/vim-snippets'
+" Refactoring
+Plug 'adoy/vim-php-refactoring-toolbox'
+Plug 'phpactor/phpactor'
 
-"Track the engine.
+" Intellisense
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Git
+Plug 'mhinz/vim-signify'
+"Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-rhubarb'
+"Plug 'junegunn/gv.vim'
+
+" Snippets
 "Plug 'SirVer/ultisnips'
-"Snippets are separated from the engine. Add this if you want them:
-"Plugin 'honza/vim-snippets'
+"Plug 'honza/vim-snippets'
 
+" Outline
+Plug 'majutsushi/tagbar'
+
+" Debugger
+"Plug 'joonty/vdebug'
+
+" PHPDoc
+Plug 'tobyS/vmustache'
+Plug 'tobyS/pdv'
+
+"PHP
+"Plug 'tpope/vim-fugitive'
+"Plug 'StanAngeloff/php.vim'
+"Plug 'stephpy/vim-php-cs-fixer'
 "Plug 'ncm2/ncm2'
-"Plug 'roxma/nvim-yarp'
-"Plug 'ncm2/ncm2-bufword'
-"Plug 'ncm2/ncm2-path'
-Plug 'dense-analysis/ale'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'phpactor/phpactor'
+"Plug 'phpactor/ncm2-phpactor'
+
+" Themes
+Plug 'christianchiarulli/onedark.vim'
+Plug 'kaicataldo/material.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'tomasiser/vim-code-dark'
+Plug 'arzg/vim-colors-xcode'
+
 call plug#end()
 
-" enable ncm2 for all buffers
-"autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" IMPORTANT: :help Ncm2PopupOpen for more information
-"set completeopt=noinsert,menuone,noselect
-
-"Trigger configuration. Do not use <tab> if you use
-"https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-"If you want :UltiSnipsEdit to split your window.
-"let g:UltiSnipsEditSplit="vertical"
-
+" Abre a REPL.automaticamente
+function! Repl()
+    :w
+    if &filetype == "javascript"
+        :exec "terminal node"
+    elseif &filetype == "python"
+        :exec "terminal python3"
+    elseif &filetype == "php"
+        :exec "terminal php -a"
+    elseif &filetype == "sh"
+        :exec "terminal"
+    endif
+endfunction
+noremap <C-a> :call Repl() <CR>
 
 set t_Co=256
 syntax on
@@ -176,6 +163,9 @@ syntax on
 colorscheme xcodedark	
 "colorscheme minimalist
 "colorscheme gruvbox
+
+"set background=dark
+"colorscheme vim-material
 
 "set background=dark
 
@@ -193,3 +183,5 @@ augroup END
 
 autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
 autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
+
+
