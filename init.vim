@@ -104,6 +104,9 @@ Plug 'phpactor/phpactor'
 " Intellisense
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Ctags
+Plug 'craigemery/vim-autotag'
+
 " Git
 Plug 'mhinz/vim-signify'
 "Plug 'airblade/vim-gitgutter'
