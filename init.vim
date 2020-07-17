@@ -67,6 +67,7 @@ call plug#begin()
 
 " Essentials 
 Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
 Plug 'bfredl/nvim-miniyank'
 Plug 'moll/vim-bbye'
 Plug 'itchyny/lightline.vim'
@@ -172,13 +173,13 @@ colorscheme xcodedark
 
 "set background=dark
 
-set guifont=SF\ Mono:h11 
+"set guifont=SF\ Mono:h11 
 "set guifontwide=MingLiU:h10 "For windows to display mixed character sets
 set encoding=utf-8
 
-let g:airline_theme='minimalist'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline_theme='minimalist'
+"let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tabline#enabled = 1
 
 augroup vim-colors-xcode
     autocmd!
